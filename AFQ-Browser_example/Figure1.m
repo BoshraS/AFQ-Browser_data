@@ -54,7 +54,7 @@ for ii = tracts
     ylabel('Mean Diffusivity (\mum^2/ms)','fontsize',14)
     xlabel('Distance Along Fiber Bundle','fontsize',14)
     set(gca,'fontsize',12)
-    print(sprintf('Figure1_MD-%d.eps',ii),'-dpdf')
+    print(sprintf('Figure1_MD-%d.pdf',ii),'-dpdf')
 end
 
 %% Render fibers
