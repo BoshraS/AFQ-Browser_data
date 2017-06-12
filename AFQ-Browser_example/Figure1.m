@@ -26,11 +26,10 @@ for ii = tracts
     end
     axis([6 95 .35 .695])
     hold off
-    print(sprintf('Figure1_FA-%d.eps',ii),'-depsc2')
     ylabel('Fractional Anisotropy','fontsize',14)
     xlabel('Distance Along Fiber Bundle','fontsize',14)
-    
     set(gca,'fontsize',12)
+    print(sprintf('Figure1_FA-%d.pdf',ii),'-dpdf')
 end
 
 %% MD plot
@@ -52,11 +51,10 @@ for ii = tracts
     end
     axis([5 95 .55 .75])
     hold off
-    ylabel('Mean Diffusivity','fontsize',14)
+    ylabel('Mean Diffusivity (\mum^2/ms)','fontsize',14)
     xlabel('Distance Along Fiber Bundle','fontsize',14)
-    
     set(gca,'fontsize',12)
-    print(sprintf('Figure1_MD-%d.eps',ii),'-depsc2')
+    print(sprintf('Figure1_MD-%d.eps',ii),'-dpdf')
 end
 
 %% Render fibers
