@@ -8,14 +8,14 @@ nodes = 6:95;
 colors = [1 0 0; 0 0 1];
 sub = 21;
 close all
-properties = {'fa'};
+properties = {'fa' 'rd'};
 axisscale = {[minmax(nodes) .55 .9], [minmax(nodes) .2 .6], [minmax(nodes) .35 .8]}
 %% MD plot
 c=0; close all
 for p = 1:length(properties)
     for ii = tracts
         c = c+1;
-        figure(1);subplot(3,4,c); hold
+        figure(1);subplot(2,6,c); hold
         data = AFQ_get(afq, fgnames{ii}, properties{p});
         % Plot individual subjects and SDs
         for jj = 1:2
@@ -31,12 +31,14 @@ for p = 1:length(properties)
             plot(nodes, m, '-', 'color', colors(jj,:), 'linewidth',3);
             %axis([5 95 .55 .75])
             if jj==1
-            zs = minmax((data(sub,nodes)-m)./sd);
-            fprintf('patient max %.2f min %.2f zscore prop %s tract %s', zs(1),zs(2),properties{p},fgnames{ii})
+                
+                [zs i] = max(sum((data(als,nodes)-repmat(m,[sum(als) 1]))./repmat(sd,[sum(als) 1])<-1));
+                fprintf('\n%s %s %d at node %d',fgnames{ii},properties{p},zs,i)
+                %fprintf('patient max %.2f min %.2f zscore prop %s tract %s', zs(1),zs(2),properties{p},fgnames{ii})
             end
         end
         % Plot patients as light lines
-        plot(repmat(nodes,[sum(als==1),1])',data(als==1,nodes)','-', 'color', [.5 .5 1],'linewidth',.5)
+        %plot(repmat(nodes,[sum(als==1),1])',data(als==1,nodes)','-', 'color', [.5 .5 1],'linewidth',.5)
         % Format axis and save figure
         hold off
         %xlabel('Distance Along Fiber Bundle','fontsize',14)
@@ -46,7 +48,7 @@ for p = 1:length(properties)
         %close
         
         % Plot group comparison and SEs
-        figure(2);subplot(3,4,c); hold
+        figure(2);subplot(2,6,c); hold
         for jj = 1:2
             d = data(als==jj-1,nodes);
             m = nanmean(d);
@@ -69,8 +71,8 @@ for p = 1:length(properties)
         %close
     end
 end
-figure(1); print('Individual-MSpatient.pdf','-dpdf','-r300');
-figure(2); print('GroupComp-MSpatient.pdf','-dpdf','-r300');
+figure(1); print('STD-ALSSpatient.pdf','-dpdf','-r300');
+figure(2); print('SE-ALSpatient.pdf','-dpdf','-r300');
 
 %% Render fibers
 cd ~/git/AFQ-Browser_data/AFQ-Browser_example
