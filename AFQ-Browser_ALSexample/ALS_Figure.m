@@ -77,32 +77,7 @@ for p = 1:length(properties)
 end
 figure(1); set(gcf,'units','inches','position',[1 1 14 4]);
 print('STD-ALSSpatient.pdf','-dpdf');
-figure(2); set(gcf,'position',[350 847 1279 385]);
+figure(2); set(gcf,'position',[1 1 14 4]);
 print('SE-ALSpatient.pdf','-dpdf');
 
-%% Render fibers
-cd ~/git/AFQ-Browser_data/AFQ-Browser_example
-fg = fgRead('exampleFibers.mat');
-im = niftiRead('t1_class_2DTI.nii.gz');
-im.data = im.data==4;
-msh = AFQ_meshCreate(im,'boxfilter',5)
-
-lh=AFQ_RenderFibers(fg(3),'color',[1 .5 0],'numfibers',500)
-AFQ_RenderFibers(fg(19),'color',[0 .5 1],'numfibers',500,'newfig',0)
-AFQ_RenderFibers(fg(13),'color',[1 0 1],'numfibers',500,'newfig',0)
-AFQ_RenderFibers(fg(9),'color',[.7 .7 .7],'numfibers',500,'newfig',0,'radius',.5)
-
-fg9 = dtiResampleFiberGroup(fg(9),100,'N');
-for ii = 1:length(fg9.fibers)
-    fg9.fibers{ii} = fg9.fibers{ii}(:,1:40);
-end
-AFQ_RenderFibers(fg9,'color',[.4 0 .6],'numfibers',500,'newfig',0,'radius',1)
-patch(msh.tr)
-shading interp
-axis image
-axis off
-view(-24,24)
-camlight(lh,'left')
-
-print('MS-Rendering.png','-dpng')
 
