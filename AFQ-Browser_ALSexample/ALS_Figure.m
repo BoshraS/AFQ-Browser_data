@@ -76,9 +76,9 @@ for p = 1:length(properties)
     end
 end
 figure(1); set(gcf,'units','inches','position',[1 1 14 4]);
-print('STD-ALSSpatient.pdf','-dpdf','-bestfit');
+print('STD-ALSSpatient.pdf','-dpdf');
 figure(2); set(gcf,'position',[350 847 1279 385]);
-print('SE-ALSpatient.pdf','-dpdf','-bestfit');
+print('SE-ALSpatient.pdf','-dpdf');
 
 %% Render fibers
 cd ~/git/AFQ-Browser_data/AFQ-Browser_example
