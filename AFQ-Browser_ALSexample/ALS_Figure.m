@@ -20,7 +20,7 @@ for p = 1:length(properties)
         data = AFQ_get(afq, fgnames{ii}, properties{p});
         % Plot patients as light lines for CSTs
         if ii==3 || ii==4
-            plot(repmat(nodes,[sum(als==1),1])',data(als==1,nodes)','-', 'color', [.7 .7 1],'linewidth',.5)
+            plot(repmat(nodes,[sum(als==1),1])',data(als==1,nodes)','-', 'color', [.65 .65 1],'linewidth',.5)
         end
         % Plot groups means and SDs
         for jj = 1:2
@@ -33,7 +33,7 @@ for p = 1:length(properties)
             patch([nodes fliplr(nodes)], [m+sd fliplr(m-sd)],colors(jj,:), ...
                 'edgealpha', 0, 'facealpha', .3);
             % Plot
-            plot(nodes, m, '-', 'color', colors(jj,:), 'linewidth',3);
+            plot(nodes, m, '-', 'color', colors(jj,:), 'linewidth',2);
             %axis([5 95 .55 .75])
             if jj==1
                 
@@ -63,7 +63,7 @@ for p = 1:length(properties)
             patch([nodes fliplr(nodes)], [m+se fliplr(m-se)],colors(jj,:), ...
                 'edgealpha', 0, 'facealpha', .3);
             % Plot
-            plot(nodes, m, '-', 'color', colors(jj,:), 'linewidth',3);
+            plot(nodes, m, '-', 'color', colors(jj,:), 'linewidth',2);
             %axis([5 95 .55 .75])
         end
         % Format axis and save figure
