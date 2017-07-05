@@ -9,15 +9,20 @@ colors = [1 0 0; 0 0 1];
 sub = 21;
 close all
 properties = {'fa' 'rd'};
-axisscale = {[minmax(nodes) .55 .9], [minmax(nodes) .2 .6], [minmax(nodes) .35 .8]}
-%% MD plot
+axisscale = {[minmax(nodes) .3 .85], [minmax(nodes) .3 .8]}
+
+%% Plots
 c=0; close all
 for p = 1:length(properties)
     for ii = tracts
         c = c+1;
         figure(1);subplot(2,6,c); hold
         data = AFQ_get(afq, fgnames{ii}, properties{p});
-        % Plot individual subjects and SDs
+        % Plot patients as light lines for CSTs
+        if ii==3 || ii==4
+            plot(repmat(nodes,[sum(als==1),1])',data(als==1,nodes)','-', 'color', [.7 .7 1],'linewidth',.5)
+        end
+        % Plot groups means and SDs
         for jj = 1:2
             d = data(als==jj-1,nodes);
             m = nanmean(d);
@@ -37,13 +42,12 @@ for p = 1:length(properties)
                 %fprintf('patient max %.2f min %.2f zscore prop %s tract %s', zs(1),zs(2),properties{p},fgnames{ii})
             end
         end
-        % Plot patients as light lines
-        %plot(repmat(nodes,[sum(als==1),1])',data(als==1,nodes)','-', 'color', [.5 .5 1],'linewidth',.5)
+        
         % Format axis and save figure
         hold off
         %xlabel('Distance Along Fiber Bundle','fontsize',14)
         set(gca,'fontsize',12,'xticklabel',[])
-        axis tight
+        axis(axisscale{p})
         %print(sprintf('MSpatient-Tract%d-%s.pdf',ii,properties{p}),'-dpdf')
         %close
         
@@ -66,13 +70,15 @@ for p = 1:length(properties)
         hold off
         %xlabel('Distance Along Fiber Bundle','fontsize',14)
         set(gca,'fontsize',12,'xticklabel',[])
-        axis tight
+        axis(axisscale{p})
         %print(sprintf('GroupComp-MSpatient-Tract%d-%s.pdf',ii,properties{p}),'-dpdf')
         %close
     end
 end
-figure(1); print('STD-ALSSpatient.pdf','-dpdf','-r300');
-figure(2); print('SE-ALSpatient.pdf','-dpdf','-r300');
+figure(1); set(gcf,'units','inches','position',[1 1 14 4]);
+print('STD-ALSSpatient.pdf','-dpdf','-bestfit');
+figure(2); set(gcf,'position',[350 847 1279 385]);
+print('SE-ALSpatient.pdf','-dpdf','-bestfit');
 
 %% Render fibers
 cd ~/git/AFQ-Browser_data/AFQ-Browser_example
