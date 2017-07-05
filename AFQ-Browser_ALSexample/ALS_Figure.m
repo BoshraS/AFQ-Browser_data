@@ -77,7 +77,7 @@ for p = 1:length(properties)
 end
 figure(1); set(gcf,'units','inches','position',[1 1 14 4]);
 print('STD-ALSSpatient.pdf','-dpdf');
-figure(2); set(gcf,'position',[1 1 14 4]);
+figure(2); set(gcf,'units','inches','position',[1 1 14 4]);
 print('SE-ALSpatient.pdf','-dpdf');
 
 
